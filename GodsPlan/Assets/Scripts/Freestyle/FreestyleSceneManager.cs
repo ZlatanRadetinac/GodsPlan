@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +9,14 @@ public class FreestyleSceneManager : MonoBehaviour
 
     public InsultProvider InsultProvider;
     public Text ChallengeText;
+    public Text HypeText;
     public ToggleGroup ResponsesGroup;
+    public RawImage Score;
+    public Image Rihanna;
 
     private Insult CurrentInsult { get; set; }
+
+    private int CurrentScore { get; set; }
 
     // Use this for initialization
     void Start()
@@ -23,7 +27,12 @@ public class FreestyleSceneManager : MonoBehaviour
         }
 
         Instance = this;
+
+        Score.color = new Color(1.0f, 0.5f, 0.5f);
+        CurrentScore = 50;
         UnityEngine.Random.InitState((int)DateTime.UtcNow.TimeOfDay.Ticks);
+        HypeText.text = "CRUSH YOUR OPPONENT";
+        Rihanna.enabled = false;
 
         var toggles = ResponsesGroup.GetComponentsInChildren<Toggle>();
         foreach (var toggle in toggles)
@@ -44,11 +53,27 @@ public class FreestyleSceneManager : MonoBehaviour
 
             if (isCorrect)
             {
-                Debug.Log("You are amazing!!");
+                CurrentScore += 10;
+                HypeText.text = "AMAZING";
+                Score.color = new Color(Score.color.r, Score.color.b - 0.125f, Score.color.g - 0.125f);
+                Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width + 20, Score.rectTransform.rect.height);
+
+                if (CurrentScore >= 100)
+                {
+                    Rihanna.enabled = true;
+                    // TODO: next level
+                }
             }
             else
             {
-                Debug.Log("You are bad");
+                HypeText.text = "YOUR MOVES ARE WEAK";
+                Score.color = new Color(Score.color.r, Score.color.b + 0.125f, Score.color.g + 0.125f);
+                Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width - 20, Score.rectTransform.rect.height);
+                CurrentScore -= 10;
+                if (CurrentScore <= 0)
+                {
+                    // TODO: game over
+                }
             }
 
             SetResponses();
