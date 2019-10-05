@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 public class InsultProvider : ScriptableObject
 {
@@ -21,14 +21,18 @@ public class InsultProvider : ScriptableObject
         }
     }
 
+    public InsultProvider(TextAsset textAsset)
+    {
+
+    }
+
+    public void LoadInsults()
+    {
+        AssetDatabase.LoadAssetAtPath("../../Resources/Text/insults.txt", typeof(TextAsset));
+    }
+
     public Insult GetRandomInsult()
     {
         return Insults.ElementAt(Random.Range(0, Insults.Count));
-    }
-
-    [MenuItem("Tools/MyTool/Do It in C#")]
-    static void DoIt()
-    {
-        EditorUtility.DisplayDialog("MyTool", "Do It in C# !", "OK", "");
     }
 }
