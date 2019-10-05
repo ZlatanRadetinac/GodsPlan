@@ -29,7 +29,7 @@ public class FreestyleSceneManager : MonoBehaviour
         Instance = this;
 
         Score.color = new Color(1.0f, 0.5f, 0.5f);
-        CurrentScore = 50;
+        CurrentScore = 100;
         UnityEngine.Random.InitState((int)DateTime.UtcNow.TimeOfDay.Ticks);
         HypeText.text = "CRUSH YOUR OPPONENT";
         Rihanna.enabled = false;
@@ -53,14 +53,17 @@ public class FreestyleSceneManager : MonoBehaviour
 
             if (isCorrect)
             {
-                CurrentScore += 10;
+                CurrentScore += 25;
                 HypeText.text = "AMAZING";
                 Score.color = new Color(Score.color.r, Score.color.b - 0.125f, Score.color.g - 0.125f);
                 Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width + 20, Score.rectTransform.rect.height);
 
-                if (CurrentScore >= 100)
+                if (CurrentScore >= 200)
                 {
                     Rihanna.enabled = true;
+                    HypeText.enabled = false;
+                    Score.enabled = false;
+                    ResponsesGroup.enabled = false;
                     // TODO: next level
                 }
             }
@@ -69,7 +72,7 @@ public class FreestyleSceneManager : MonoBehaviour
                 HypeText.text = "YOUR MOVES ARE WEAK";
                 Score.color = new Color(Score.color.r, Score.color.b + 0.125f, Score.color.g + 0.125f);
                 Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width - 20, Score.rectTransform.rect.height);
-                CurrentScore -= 10;
+                CurrentScore -= 25;
                 if (CurrentScore <= 0)
                 {
                     // TODO: game over

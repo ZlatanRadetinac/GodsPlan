@@ -8,6 +8,10 @@ public class InsultProvider : MonoBehaviour
 {
     private HashSet<Insult> Insults { get; }
 
+    private HashSet<Insult> UsedInsults { get; }
+
+    private IEnumerable<Insult> UnusedInsults => Insults.Except(UsedInsults);
+
     public InsultProvider() : this(new StreamReader("Assets/Resources/Text/insults.txt"))
     {
     }
@@ -15,6 +19,7 @@ public class InsultProvider : MonoBehaviour
     public InsultProvider(StreamReader reader)
     {
         Insults = new HashSet<Insult>();
+        UsedInsults = new HashSet<Insult>();
 
         using (reader)
         {
@@ -31,26 +36,20 @@ public class InsultProvider : MonoBehaviour
         }
     }
 
-    public InsultProvider(TextAsset textAsset)
-    {
-
-    }
-
-    public void LoadInsults()
-    {
-        AssetDatabase.LoadAssetAtPath("../../Resources/Text/insults.txt", typeof(TextAsset));
-    }
-
-    public (Insult insult, List<string> wrongAnswers) GetRandomInsult()
+    public (Insult insult, List<string> wrongAnswers) GetRandomInsult(bool onlyUnused = true)
     {
         Debug.Log("Insults: " + Insults.Count);
 
-        var insult = Insults.ElementAt(Random.Range(0, Insults.Count));
+        var insultSet = onlyUnused ? UnusedInsults : Insults;
+        var insult = insultSet.ElementAt(Random.Range(0, insultSet.Count()));
+
         var wrongAnswers = Insults
             .Where(i => i.CorrectResponseLine != insult.CorrectResponseLine)
             .Select(x => x.CorrectResponseLine)
             .OrderBy(x => Random.Range(0f, 1f))
             .ToList();
+
+        UsedInsults.Add(insult);
 
         return (insult, wrongAnswers);
     }
