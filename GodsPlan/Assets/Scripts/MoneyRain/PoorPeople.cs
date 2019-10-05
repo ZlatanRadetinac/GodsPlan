@@ -32,7 +32,7 @@ public class PoorPeople : MonoBehaviour
         {
             Destroy(other.gameObject);
             GameObject drake = GameObject.FindGameObjectWithTag("Player");
-            drake.GetComponent<RichDrake>().score += 100;
+            drake.GetComponent<RichDrake>().score += drake.GetComponent<RichDrake>().dollarsToGive;
         }
 
         if (other.gameObject.tag == "Wall")

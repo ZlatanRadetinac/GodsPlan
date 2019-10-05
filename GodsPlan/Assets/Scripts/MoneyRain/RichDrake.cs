@@ -14,6 +14,7 @@ public class RichDrake : MonoBehaviour
     public float speed = 0.05F;
     public int dollars = 100000000;
     public int score = 100000000;
+    public int dollarsToGive = 1000;
 
     public Text scoreText;
     public Text moneyLeftText;
@@ -48,13 +49,16 @@ public class RichDrake : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            happyRegularDrake.SetActive(false);
-            happyDrakeWithMoney.SetActive(true);
+            if (dollars > 0)
+            {
+                happyRegularDrake.SetActive(false);
+                happyDrakeWithMoney.SetActive(true);
 
-            currentMoneyObject = GameObject.Instantiate(moneySample, transform, false);
-            currentMoneyObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
-            currentMoneyObject.GetComponentInChildren<Rigidbody2D>().simulated = false;
-            dollars -= 1000;
+                currentMoneyObject = GameObject.Instantiate(moneySample, transform, false);
+                currentMoneyObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
+                currentMoneyObject.GetComponentInChildren<Rigidbody2D>().simulated = false;
+                dollars -= dollarsToGive;
+            }
         }
 
         if (Input.GetKey("space"))
