@@ -12,6 +12,8 @@ public class FreestyleSceneManager : MonoBehaviour
     public Text ChallengeText;
     public ToggleGroup ResponsesGroup;
 
+    private Insult CurrentInsult { get; set; }
+
     // Use this for initialization
     void Start()
     {
@@ -23,21 +25,39 @@ public class FreestyleSceneManager : MonoBehaviour
         Instance = this;
         UnityEngine.Random.InitState((int)DateTime.UtcNow.TimeOfDay.Ticks);
 
-        ResponsesGroup.SetAllTogglesOff();
+        var toggles = ResponsesGroup.GetComponentsInChildren<Toggle>();
+        foreach (var toggle in toggles)
+        {
+            toggle.onValueChanged.AddListener(OnResponseSelected);
+        }
 
         SetResponses();
+    }
+
+    void OnResponseSelected(bool toggleState)
+    {
+        if (toggleState)
+        {
+            var toggle = ResponsesGroup.ActiveToggles().Single();
+
+            var isCorrect = CurrentInsult.ValidateResponse(toggle.GetComponentInChildren<Text>().text);
+
+            if (isCorrect)
+            {
+                Debug.Log("You are amazing!!");
+            }
+            else
+            {
+                Debug.Log("You are bad");
+            }
+
+            SetResponses();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Hewwo!");
-
-        var toggles = ResponsesGroup.GetComponentsInChildren<Toggle>();
-
-        Debug.Log(toggles.Count());
-
-        Debug.Log(Path.GetFullPath("."));
     }
 
     private Insult NewRhyme()
@@ -47,6 +67,8 @@ public class FreestyleSceneManager : MonoBehaviour
 
     private void SetResponses()
     {
+        ResponsesGroup.SetAllTogglesOff();
+
         (var insult, var wrongAnswers) = InsultProvider.GetRandomInsult();
 
         Debug.Log(wrongAnswers.Count);
@@ -58,7 +80,6 @@ public class FreestyleSceneManager : MonoBehaviour
 
         for (int i = 0; i < toggles.Count(); i++)
         {
-            //toggles[i].isOn = false;
             var label = toggles[i].GetComponentInChildren<Text>();
             if (i == correct)
             {
@@ -69,5 +90,7 @@ public class FreestyleSceneManager : MonoBehaviour
                 label.text = wrongAnswers[i];
             }
         }
+
+        CurrentInsult = insult;
     }
 }
