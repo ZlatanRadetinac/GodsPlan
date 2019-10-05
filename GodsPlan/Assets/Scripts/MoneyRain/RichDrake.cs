@@ -12,7 +12,7 @@ public class RichDrake : MonoBehaviour
     GameObject handPosition;
 
     public float speed = 0.05F;
-    public int dollars = 100000000;
+    public float dollars = 100000000;
     public int score = 100000000;
     public int dollarsToGive = 1000;
 
