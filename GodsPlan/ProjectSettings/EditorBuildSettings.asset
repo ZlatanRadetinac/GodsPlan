@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Platformer.unity
     guid: d5b1809e2a3f37c408e38258d4e38c97
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/InsultFight.unity
+    guid: 7a3b266ff48813540b837c65d3c989ba
   m_configObjects: {}
