@@ -12,7 +12,8 @@ public class MoneyRain : MonoBehaviour
     public GameObject endScene;
     public Text endSceneLoveText;
     public Text endSceneHateText;
-    public Text tutorialText;
+    public RawImage budgetImage;
+    public float faddingSpeed = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,12 @@ public class MoneyRain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (budgetImage.color.a > 0)
+        {
+            Color newColor = budgetImage.color;
+            newColor.a = newColor.a - Time.deltaTime * faddingSpeed;
+            budgetImage.color = newColor;
+        }
     }
 
     public void EndScene(int score)
