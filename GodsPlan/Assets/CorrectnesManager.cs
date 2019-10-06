@@ -13,7 +13,9 @@ public class CorrectnesManager : MonoBehaviour
 
     public GameObject resultCanvas;
     public int result = 0;
-    public int target = 50;
+    public int target = 20;
+
+    public GameObject moneyBar;
 
     void Start()
     {
@@ -42,6 +44,9 @@ public class CorrectnesManager : MonoBehaviour
         result++;
 
         textComponent.text = "Current: " + result.ToString() + "     Taret: " + target.ToString();
+
+        var moneyProgress = moneyBar.GetComponent<ProgressScript>();
+        moneyProgress.UpdateMoneyBalance();
     }
 
     public void WrongAnswer()

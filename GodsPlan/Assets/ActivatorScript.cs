@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class ActivatorScript : MonoBehaviour
@@ -9,18 +10,28 @@ public class ActivatorScript : MonoBehaviour
     public bool hit = false;
     GameObject note;
 
+    float timer = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
         if (Input.GetKeyDown(key) && active)
         {
             Destroy(note.gameObject);
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            timer = 0.5f;
         }
     }
 

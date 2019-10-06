@@ -49,7 +49,7 @@ public class WorkManager : MonoBehaviour
 
         var rigidBody = note.GetComponent<Rigidbody2D>();
         rigidBody.mass = 1;
-        rigidBody.velocity = new Vector2(0, -0.2f);
+        rigidBody.velocity = new Vector2(0, -2f);
 
         // tagging note with Note tag so activator can detect collision
         note.tag = "Note";
