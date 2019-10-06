@@ -10,6 +10,7 @@ public class FreestyleSceneManager : MonoBehaviour
     public InsultProvider InsultProvider;
     public Text ChallengeText;
     public Text HypeText;
+    public Countdown AnswerCountdown;
     public ToggleGroup ResponsesGroup;
     public RawImage Score;
     public Image Rihanna;
@@ -51,36 +52,41 @@ public class FreestyleSceneManager : MonoBehaviour
 
             var isCorrect = CurrentInsult.ValidateResponse(toggle.GetComponentInChildren<Text>().text);
 
-            if (isCorrect)
-            {
-                CurrentScore += 25;
-                HypeText.text = "AMAZING";
-                Score.color = new Color(Score.color.r, Score.color.b - 0.125f, Score.color.g - 0.125f);
-                Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width + 20, Score.rectTransform.rect.height);
-
-                if (CurrentScore >= 200)
-                {
-                    Rihanna.enabled = true;
-                    HypeText.enabled = false;
-                    Score.enabled = false;
-                    ResponsesGroup.enabled = false;
-                    // TODO: next level
-                }
-            }
-            else
-            {
-                HypeText.text = "YOUR MOVES ARE WEAK";
-                Score.color = new Color(Score.color.r, Score.color.b + 0.125f, Score.color.g + 0.125f);
-                Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width - 20, Score.rectTransform.rect.height);
-                CurrentScore -= 25;
-                if (CurrentScore <= 0)
-                {
-                    // TODO: game over
-                }
-            }
-
-            SetResponses();
+            ProcessResponse(isCorrect);
         }
+    }
+
+    public void ProcessResponse(bool isResponseCorrect)
+    {
+        if (isResponseCorrect)
+        {
+            CurrentScore += 25;
+            HypeText.text = "AMAZING";
+            Score.color = new Color(Score.color.r, Score.color.b - 0.125f, Score.color.g - 0.125f);
+            Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width + 20, Score.rectTransform.rect.height);
+
+            if (CurrentScore >= 200)
+            {
+                Rihanna.enabled = true;
+                HypeText.enabled = false;
+                Score.enabled = false;
+                ResponsesGroup.enabled = false;
+                // TODO: next level
+            }
+        }
+        else
+        {
+            HypeText.text = "YOUR MOVES ARE WEAK";
+            Score.color = new Color(Score.color.r, Score.color.b + 0.125f, Score.color.g + 0.125f);
+            Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width - 20, Score.rectTransform.rect.height);
+            CurrentScore -= 25;
+            if (CurrentScore <= 0)
+            {
+                // TODO: game over
+            }
+        }
+
+        SetResponses();
     }
 
     // Update is called once per frame
@@ -120,5 +126,7 @@ public class FreestyleSceneManager : MonoBehaviour
         }
 
         CurrentInsult = insult;
+
+        AnswerCountdown.ResetCountdown();
     }
 }

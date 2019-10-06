@@ -1,38 +1,26 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class InsultProvider : MonoBehaviour
 {
-    private HashSet<Insult> Insults { get; }
+    private HashSet<Insult> Insults { get; } = new HashSet<Insult>();
 
-    private HashSet<Insult> UsedInsults { get; }
+    private HashSet<Insult> UsedInsults { get; } = new HashSet<Insult>();
 
-    private IEnumerable<Insult> UnusedInsults => Insults.Except(UsedInsults);
+    private IEnumerable<Insult> UnusedInsults => Insults.Except(UsedInsults);    
 
-    public InsultProvider() : this(new StreamReader("Assets/Resources/Text/insults.txt"))
+    public void Awake()
     {
-    }
+        var insults = Resources.Load<TextAsset>("Text/insults");
+        var lines = insults.text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-    public InsultProvider(StreamReader reader)
-    {
-        Insults = new HashSet<Insult>();
-        UsedInsults = new HashSet<Insult>();
+        Debug.Log("Total insult lines: " + lines.Length);
 
-        using (reader)
+        for (int i = 0; i < lines.Length; i += 2)
         {
-            while (!reader.EndOfStream)
-            {
-                var challenge = reader.ReadLine();
-                var response = reader.ReadLine();
-                Debug.Log(response);
-
-                Insults.Add(new Insult(challenge, response));
-
-                reader.ReadLine();
-            }
+            Insults.Add(new Insult(lines[i], lines[i + 1]));
         }
     }
 
@@ -41,12 +29,12 @@ public class InsultProvider : MonoBehaviour
         Debug.Log("Insults: " + Insults.Count);
 
         var insultSet = onlyUnused ? UnusedInsults : Insults;
-        var insult = insultSet.ElementAt(Random.Range(0, insultSet.Count()));
+        var insult = insultSet.ElementAt(UnityEngine.Random.Range(0, insultSet.Count()));
 
         var wrongAnswers = Insults
             .Where(i => i.CorrectResponseLine != insult.CorrectResponseLine)
             .Select(x => x.CorrectResponseLine)
-            .OrderBy(x => Random.Range(0f, 1f))
+            .OrderBy(x => UnityEngine.Random.Range(0f, 1f))
             .ToList();
 
         UsedInsults.Add(insult);
