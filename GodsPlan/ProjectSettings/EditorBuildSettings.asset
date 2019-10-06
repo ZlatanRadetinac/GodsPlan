@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/InsultFight.unity
     guid: 7a3b266ff48813540b837c65d3c989ba
   - enabled: 1
-    path: Assets/MoneyRainTmp.unity
+    path: Assets/Scenes/MoneyRainTmp.unity
     guid: 8df372e4dc1706342bfc0c47fdb0a53b
   m_configObjects: {}
