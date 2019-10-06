@@ -28,6 +28,10 @@ public class Bomb : MonoBehaviour
 
     private void DoDamage()
     {
-        print(String.Format("I hit: {0}", Physics2D.OverlapCircleAll(cicrcleCollider.transform.position, cicrcleCollider.radius).Where(x => x.gameObject != gameObject && x.gameObject != drake).First().gameObject.name));
+        EnemyController helper = null;
+        if (Physics2D.OverlapCircleAll(cicrcleCollider.transform.position, cicrcleCollider.radius).Any(x => x.gameObject.TryGetComponent<EnemyController>(out helper)))
+        {
+            DestroyImmediate(helper.gameObject);
+        }
     }
 }
