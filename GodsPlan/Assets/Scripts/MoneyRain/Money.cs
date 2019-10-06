@@ -15,11 +15,9 @@ public class Money : MonoBehaviour
         transform.Rotate(0F, 0F, 0.5F);
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
-        if (other.tag == "Floor")
+        if (other.gameObject.tag == "Floor")
         {
             Destroy(this);
         }

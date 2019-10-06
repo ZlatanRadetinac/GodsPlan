@@ -58,6 +58,11 @@ public class RichDrake : MonoBehaviour
                 currentMoneyObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
                 currentMoneyObject.GetComponentInChildren<Rigidbody2D>().simulated = false;
                 dollars -= dollarsToGive;
+
+                if (dollars <= 0)
+                {
+                    GameObject.FindObjectOfType<MoneyRain>().EndScene(score);
+                }
             }
         }
 
