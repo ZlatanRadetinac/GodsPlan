@@ -16,7 +16,7 @@ public class Countdown : MonoBehaviour
     {
         Timer = new Timer(1000);
         Timer.Elapsed += OnTimerTick;
-        Timer.AutoReset = true;
+        Timer.AutoReset = false;
     }
 
     // Use this for initialization
