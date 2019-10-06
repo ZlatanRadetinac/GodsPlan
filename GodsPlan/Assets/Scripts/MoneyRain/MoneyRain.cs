@@ -30,8 +30,20 @@ public class MoneyRain : MonoBehaviour
         woman.gameObject.SetActive(false);
         man.gameObject.SetActive(false);
         oldman.gameObject.SetActive(false);
+
         endSceneLoveText.text = string.Format("People are no longer poor! Drake people love you!\nYou gave away {0}$\nTHE END", score);
 
         endScene.SetActive(true);
+
+        if (score > 800000)
+        {
+            endSceneLoveText.gameObject.SetActive(true);
+            endSceneHateText.gameObject.SetActive(false);
+        }
+        else
+        {
+            endSceneHateText.gameObject.SetActive(true);
+            endSceneLoveText.gameObject.SetActive(false);
+        }
     }
 }
