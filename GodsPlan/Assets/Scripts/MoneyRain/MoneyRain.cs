@@ -12,6 +12,7 @@ public class MoneyRain : MonoBehaviour
     public GameObject endScene;
     public Text endSceneLoveText;
     public Text endSceneHateText;
+    public Text tutorialText;
 
     // Start is called before the first frame update
     void Start()
