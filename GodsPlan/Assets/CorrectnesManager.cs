@@ -47,6 +47,11 @@ public class CorrectnesManager : MonoBehaviour
 
         var moneyProgress = moneyBar.GetComponent<ProgressScript>();
         moneyProgress.UpdateMoneyBalance();
+
+        if (result == target)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("WorkEndScene");
+        }
     }
 
     public void WrongAnswer()
