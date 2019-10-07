@@ -21,4 +21,10 @@ public class SceneMgmt : MonoBehaviour
     {
         SceneManager.LoadScene("Work");
     }
+
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene("MoneyRainTmp");
+    }
 }

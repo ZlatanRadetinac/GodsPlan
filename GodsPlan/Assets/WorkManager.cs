@@ -13,7 +13,25 @@ public class WorkManager : MonoBehaviour
     };
 
     public float Timer = 0.5f;
-    public GameObject note; 
+    public GameObject note;
+    public GameObject note2;
+
+    public GameObject LineW;
+    public GameObject LineA;
+    public GameObject LineS;
+    public GameObject LineD;
+    public GameObject referenceY;
+
+    private void Awake()
+    {
+        vectorArray = new Vector2[]
+            {
+                new Vector2(LineW.transform.position.x, referenceY.transform.position.y),
+                new Vector2(LineA.transform.position.x, referenceY.transform.position.y),
+                new Vector2(LineS.transform.position.x, referenceY.transform.position.y),
+                new Vector2(LineD.transform.position.x, referenceY.transform.position.y),
+        };
+    }
 
 
     // Start is called before the first frame update
@@ -36,23 +54,23 @@ public class WorkManager : MonoBehaviour
 
     void SendNewNote()
     {
-        Instantiate(note);
+        GameObject note2 = Instantiate(note);
 
         //sending note to the random line
         int lineId = Random.Range(0, 4);
         Vector2 notePosition = vectorArray[lineId];
-        note.transform.position = notePosition;
+        note2.transform.position = notePosition;
 
         // Adding physics to the note
-        note.AddComponent<Rigidbody2D>();
-        note.AddComponent<CircleCollider2D>();
+        note2.AddComponent<Rigidbody2D>();
+        note2.AddComponent<CircleCollider2D>();
 
-        var rigidBody = note.GetComponent<Rigidbody2D>();
+        var rigidBody = note2.GetComponent<Rigidbody2D>();
         rigidBody.mass = 1;
         rigidBody.velocity = new Vector2(0, -2f);
 
         // tagging note with Note tag so activator can detect collision
-        note.tag = "Note";
+        note2.tag = "Note";
     }
 
 

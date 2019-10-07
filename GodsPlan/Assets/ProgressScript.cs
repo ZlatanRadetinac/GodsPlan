@@ -25,8 +25,8 @@ public class ProgressScript : MonoBehaviour
 
     public void UpdateMoneyBalance()
     {
-        slider.value += 5;
-        moneyBalance += 996631.90f / 20;
+        slider.value += 12.5F;
+        moneyBalance += 996631.90f / 8;
         textComponent.text = "Balance: " + moneyBalance.ToString() + " $";
     }
 }

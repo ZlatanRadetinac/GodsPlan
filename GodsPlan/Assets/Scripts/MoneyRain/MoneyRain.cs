@@ -39,7 +39,7 @@ public class MoneyRain : MonoBehaviour
         man.gameObject.SetActive(false);
         oldman.gameObject.SetActive(false);
 
-        endSceneLoveText.text = string.Format("People are no longer poor! Drake people love you!\nYou gave away {0}$\nTHE END", score);
+        endSceneLoveText.text = string.Format("People are no longer poor! Brake people love you!\nYou gave away {0}$\nTHE END", score);
 
         endScene.SetActive(true);
 

@@ -13,7 +13,7 @@ public class CorrectnesManager : MonoBehaviour
 
     public GameObject resultCanvas;
     public int result = 0;
-    public int target = 20;
+    public int target = 8;
 
     public GameObject moneyBar;
 
@@ -27,7 +27,6 @@ public class CorrectnesManager : MonoBehaviour
 
         resultCanvas = GameObject.Find("ResultCanvas");
         result = 0;
-        target = 50;
     }
 
     // Update is called once per frame
@@ -43,7 +42,7 @@ public class CorrectnesManager : MonoBehaviour
 
         result++;
 
-        textComponent.text = "Current: " + result.ToString() + "     Taret: " + target.ToString();
+        textComponent.text = "Current: " + result.ToString() + "     Target: " + target.ToString();
 
         var moneyProgress = moneyBar.GetComponent<ProgressScript>();
         moneyProgress.UpdateMoneyBalance();

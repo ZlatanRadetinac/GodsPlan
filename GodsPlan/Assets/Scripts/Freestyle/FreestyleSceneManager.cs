@@ -150,6 +150,6 @@ public class FreestyleSceneManager : MonoBehaviour
 
     public void ProceedToFtBrihanna()
     {
-        SceneManager.LoadScene("MoneyRainTmp", LoadSceneMode.Single);
+        SceneManager.LoadScene("WorkLevelStart", LoadSceneMode.Single);
     }
 }
