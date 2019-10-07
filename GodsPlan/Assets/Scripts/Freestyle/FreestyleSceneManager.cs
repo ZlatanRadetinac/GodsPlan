@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FreestyleSceneManager : MonoBehaviour
@@ -14,10 +15,18 @@ public class FreestyleSceneManager : MonoBehaviour
     public ToggleGroup ResponsesGroup;
     public RawImage Score;
     public Image Rihanna;
+    public Canvas LevelCompletedCanvas;
+    public GameObject ResponsePanel;
 
     private Insult CurrentInsult { get; set; }
 
     private int CurrentScore { get; set; }
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        LevelCompletedCanvas.gameObject.SetActive(false);
+    }
 
     // Use this for initialization
     void Start()
@@ -72,6 +81,8 @@ public class FreestyleSceneManager : MonoBehaviour
                 Score.enabled = false;
                 ResponsesGroup.enabled = false;
                 // TODO: next level
+                ResponsePanel.SetActive(false);
+                Invoke("LevelCompleted", 3);
             }
         }
         else
@@ -80,9 +91,11 @@ public class FreestyleSceneManager : MonoBehaviour
             Score.color = new Color(Score.color.r, Score.color.b + 0.125f, Score.color.g + 0.125f);
             Score.rectTransform.sizeDelta = new Vector2(Score.rectTransform.rect.width - 20, Score.rectTransform.rect.height);
             CurrentScore -= 25;
+            
             if (CurrentScore <= 0)
             {
-                // TODO: game over
+                ResponsePanel.SetActive(false);
+                Invoke("LevelCompleted", 3);
             }
         }
 
@@ -128,5 +141,15 @@ public class FreestyleSceneManager : MonoBehaviour
         CurrentInsult = insult;
 
         AnswerCountdown.ResetCountdown();
+    }
+
+    public void LevelCompleted()
+    {
+        LevelCompletedCanvas.gameObject.SetActive(true);
+    }
+
+    public void ProceedToFtBrihanna()
+    {
+        SceneManager.LoadScene("MoneyRainTmp", LoadSceneMode.Single);
     }
 }
